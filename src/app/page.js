@@ -1,7 +1,9 @@
+import TypingTest from "./components/TypingTest";
+
 export default function Home() {
   return (
     <div>
-      <h1>Typing Test</h1>
+      <TypingTest></TypingTest>
     </div>
   );
 }
