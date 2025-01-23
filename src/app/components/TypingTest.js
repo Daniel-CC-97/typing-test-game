@@ -36,13 +36,23 @@ const TypingTest = () => {
     }
 
     setQuote(fetchedQuote);
+    setTypedText(""); // Reset typed text
+    setCurrentIndex(0); // Reset index
+    setMistakes([]); // Clear mistakes
+    setFinishedQuote(false); // Reset completion flag
+  };
+
+  const handleLengthSelection = (length) => {
+    // Always re-fetch the quote, even if the length is the same
+    setQuoteLength(length); // Update quote length
+    fetchQuoteByLength(length); // Immediately fetch a new quote
   };
 
   useEffect(() => {
     if (quoteLength) {
       fetchQuoteByLength(quoteLength);
     }
-  }, [quoteLength]);
+  }, []); // Remove dependency to avoid double-fetching on state changes
 
   const handleKeyPress = (key) => {
     if (!quote) return;
@@ -100,25 +110,30 @@ const TypingTest = () => {
 
   return (
     <div className="flex min-h-screen flex-col justify-between">
-      {!quoteLength ? (
-        <div className="text-center p-4">
-          <h1 className="text-2xl font-bold mb-4">Select Quote Length</h1>
+      {/* If no quote length is selected, or if the user finishes a quote, show length options */}
+      {!quoteLength || finishedQuote ? (
+        <div className="text-center text-gray-400 p-4">
+          <h1 className="text-2xl font-bold mb-4">
+            {finishedQuote
+              ? "Finished! Select a New Quote Length"
+              : "Select Quote Length"}
+          </h1>
           <div className="flex justify-center gap-4">
             <button
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              onClick={() => setQuoteLength("short")}
+              onClick={() => handleLengthSelection("short")}
             >
               Short
             </button>
             <button
               className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-              onClick={() => setQuoteLength("medium")}
+              onClick={() => handleLengthSelection("medium")}
             >
               Medium
             </button>
             <button
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-              onClick={() => setQuoteLength("long")}
+              onClick={() => handleLengthSelection("long")}
             >
               Long
             </button>
