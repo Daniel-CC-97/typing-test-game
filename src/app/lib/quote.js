@@ -3,7 +3,7 @@ export const fetchRandomShortQuote = async () => {
 
   try {
     const response = await fetch(
-      "http://api.quotable.io/quotes/random?maxLength=200"
+      "https://api.quotable.io/quotes/random?maxLength=200"
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -22,7 +22,7 @@ export const fetchRandomMediumQuote = async () => {
 
   try {
     const response = await fetch(
-      "http://api.quotable.io/quotes/random?minLength=200&maxLength=400"
+      "https://api.quotable.io/quotes/random?minLength=200&maxLength=400"
     );
 
     if (!response.ok) {
@@ -42,7 +42,7 @@ export const fetchRandomLongQuote = async () => {
 
   try {
     const response = await fetch(
-      "http://api.quotable.io/quotes/random?minLength=400"
+      "https://api.quotable.io/quotes/random?minLength=400"
     );
 
     if (!response.ok) {
