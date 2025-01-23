@@ -12,17 +12,17 @@ const Quote = ({ quote, currentIndex, mistakes }) => {
         let className = "text-text"; // Default styling for untyped characters
         let letter = char;
 
+        if (letter === " ") {
+          letter = "_";
+          className = "text-gray-400"; // Style for spaces
+        }
+
         if (index < currentIndex && mistakes.includes(index)) {
           className = "text-incorrect"; // Red for mistakes
         } else if (index < currentIndex) {
           className = "text-correct"; // Light green for correctly typed characters (similar to the previous #90ee90)
         } else if (index === currentIndex) {
           className = "text-current underline"; // Yellow for the current character
-        }
-
-        if (letter === " ") {
-          letter = "_";
-          className = "text-gray-400"; // Style for spaces
         }
 
         return (
