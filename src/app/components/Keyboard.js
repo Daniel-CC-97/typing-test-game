@@ -12,10 +12,6 @@ const rows = [
 
 // Function to calculate key colour
 const calculateBackgroundColour = (mistakeCount) => {
-  // console.log("mistake count: ", mistakeCount);
-
-  // console.log("calculate Background colour");
-
   const maxMistakes = 10; // Maximum mistakes before full red
   const intensity = Math.min(mistakeCount / maxMistakes, 1); // Scale from 0 to 1
   const red = Math.floor(255 * intensity); // Red channel increases with intensity
@@ -24,7 +20,6 @@ const calculateBackgroundColour = (mistakeCount) => {
 };
 
 const Keyboard = ({ onKeyPress, onKeyRelease, stats }) => {
-  console.log("stats: ", stats);
   const [activeKey, setActiveKey] = useState(null);
 
   const handleKeyPress = (event) => {
@@ -63,28 +58,28 @@ const Keyboard = ({ onKeyPress, onKeyRelease, stats }) => {
   }, [onKeyPress, onKeyRelease]);
 
   return (
-    <div className="flex flex-col space-y-2 p-4">
+    <div className="flex flex-col space-y-2 p-2 sm:p-4">
       {rows.map((row, index) => (
-        <div key={index} className="flex justify-center space-x-2">
-          {row.map((key) => {
-            console.log("key: ", key);
-            return (
-              <div
-                key={key}
-                style={{
-                  backgroundColor: calculateBackgroundColour(stats[key] || 0), // Use stats to calculate colour
-                }}
-                className={`${
-                  activeKey === key ? "ring-2 ring-blue-500" : ""
-                } px-4 py-2 rounded-md text-lg font-mono cursor-pointer 
-                ${key === " " ? "w-32" : ""}
-                ${key === "BACKSPACE" ? "w-36" : ""}
-                ${key === "LSHIFT" || key === "RSHIFT" ? "w-28" : ""}`}
-              >
-                {key}
-              </div>
-            );
-          })}
+        <div
+          key={index}
+          className="flex justify-center flex-wrap gap-1 sm:gap-2"
+        >
+          {row.map((key) => (
+            <div
+              key={key}
+              style={{
+                backgroundColor: calculateBackgroundColour(stats[key] || 0), // Use stats to calculate colour
+              }}
+              className={`${
+                activeKey === key ? "ring-2 ring-blue-500" : ""
+              } text-sm sm:text-lg px-2 py-1 sm:px-4 sm:py-2 rounded-md font-mono cursor-pointer
+                ${key === " " ? "w-20 sm:w-32" : ""}
+                ${key === "BACKSPACE" ? "w-24 sm:w-36" : ""}
+                ${key === "LSHIFT" || key === "RSHIFT" ? "w-20 sm:w-28" : ""}`}
+            >
+              {key}
+            </div>
+          ))}
         </div>
       ))}
     </div>
