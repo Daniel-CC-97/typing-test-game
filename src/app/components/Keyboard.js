@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { IoIosBackspace } from "react-icons/io";
+import { BsShift } from "react-icons/bs";
 
 // Define keyboard rows
 const rows = [
@@ -72,12 +74,16 @@ const Keyboard = ({ onKeyPress, onKeyRelease, stats }) => {
               }}
               className={`${
                 activeKey === key ? "ring-2 ring-blue-500" : ""
-              } text-sm sm:text-lg px-2 py-1 sm:px-4 sm:py-2 rounded-md font-mono cursor-pointer
-                ${key === " " ? "w-20 sm:w-32" : ""}
-                ${key === "BACKSPACE" ? "w-24 sm:w-36" : ""}
-                ${key === "LSHIFT" || key === "RSHIFT" ? "w-20 sm:w-28" : ""}`}
+              } flex items-center text-sm sm:text-lg px-2 py-1 sm:px-4 sm:py-2 rounded-md font-mono cursor-pointer
+                ${key === " " ? "w-20 sm:w-32" : ""}`}
             >
-              {key}
+              {key === "BACKSPACE" ? (
+                <IoIosBackspace />
+              ) : key === "LSHIFT" || key === "RSHIFT" ? (
+                <BsShift />
+              ) : (
+                key
+              )}
             </div>
           ))}
         </div>

@@ -16,7 +16,7 @@ const fetchQuote = async (url) => {
     }
 
     const data = await response.json();
-    return data;
+    return data.length > 0 ? data[0] : null;
   } catch (error) {
     console.error("Device:", navigator.userAgent);
     console.error("Error fetching quote:", error);
