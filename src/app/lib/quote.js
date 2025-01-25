@@ -2,7 +2,6 @@ const BASE_URL = "https://api.quotable.io/quotes/random";
 
 // Utility function to handle fetch with error handling
 const fetchQuote = async (url) => {
-  console.log(`Fetching from: ${url}`);
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -16,7 +15,6 @@ const fetchQuote = async (url) => {
     }
 
     const data = await response.json();
-    console.log("Data: ", data);
     return data.length > 0 ? data[0] : null;
   } catch (error) {
     console.error("Error fetching quote: ", error);
