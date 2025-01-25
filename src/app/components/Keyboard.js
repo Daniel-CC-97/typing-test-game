@@ -73,7 +73,7 @@ const Keyboard = ({ onKeyPress, onKeyRelease, stats }) => {
                 backgroundColor: calculateBackgroundColour(stats[key] || 0), // Use stats to calculate colour
               }}
               className={`${
-                activeKey === key ? "ring-2 ring-blue-500" : ""
+                activeKey === key ? "animate-ping" : ""
               } flex items-center text-sm sm:text-lg px-2 py-1 sm:px-4 sm:py-2 rounded-md font-mono cursor-pointer
                 ${key === " " ? "w-20 sm:w-32" : ""}`}
             >
