@@ -125,7 +125,6 @@ const TypingTest = () => {
       <input
         ref={inputRef}
         type="text"
-        value="" // No visible value
         onKeyDown={handleInputKeyDown} // Delegate to key press handler
         className="absolute top-0 left-0 opacity-0"
         autoComplete="off"
