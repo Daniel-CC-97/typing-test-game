@@ -1,58 +1,43 @@
+const BASE_URL = "https://api.quotable.io/quotes/random";
+
+// Utility function to handle fetch with error handling
+const fetchQuote = async (url) => {
+  console.log(`Fetching from: ${url}`);
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log("Data: ", data);
+    return data.length > 0 ? data[0] : null;
+  } catch (error) {
+    console.error("Error fetching quote: ", error);
+    return null;
+  }
+};
+
+// Fetch short quote
 export const fetchRandomShortQuote = async () => {
-  console.log("fetch short quote");
-
-  try {
-    const response = await fetch(
-      "https://api.quotable.io/quotes/random?maxLength=200"
-    );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
-    console.log("data: ", data);
-    return data.length > 0 ? data[0] : null;
-  } catch (error) {
-    console.error("Error fetching quote: ", error);
-    return null;
-  }
+  const url = `${BASE_URL}?maxLength=200`;
+  return fetchQuote(url);
 };
 
+// Fetch medium quote
 export const fetchRandomMediumQuote = async () => {
-  console.log("fetch medium quote");
-
-  try {
-    const response = await fetch(
-      "https://api.quotable.io/quotes/random?minLength=200&maxLength=400"
-    );
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
-    console.log("data: ", data);
-    return data.length > 0 ? data[0] : null;
-  } catch (error) {
-    console.error("Error fetching quote: ", error);
-    return null;
-  }
+  const url = `${BASE_URL}?minLength=200&maxLength=400`;
+  return fetchQuote(url);
 };
 
+// Fetch long quote
 export const fetchRandomLongQuote = async () => {
-  console.log("fetch long quote");
-
-  try {
-    const response = await fetch(
-      "https://api.quotable.io/quotes/random?minLength=400"
-    );
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
-    console.log("data: ", data);
-    return data.length > 0 ? data[0] : null;
-  } catch (error) {
-    console.error("Error fetching quote: ", error);
-    return null;
-  }
+  const url = `${BASE_URL}?minLength=400`;
+  return fetchQuote(url);
 };
