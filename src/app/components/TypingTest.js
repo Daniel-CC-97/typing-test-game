@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   fetchRandomShortQuote,
   fetchRandomMediumQuote,
@@ -17,6 +17,7 @@ const TypingTest = () => {
   const [finishedQuote, setFinishedQuote] = useState(false);
   const [stats, setStats] = useState({}); // Track mistake stats
   const [quoteLength, setQuoteLength] = useState(null); // Track quote length selection
+  const inputRef = useRef(null); // Ref for the hidden input
 
   const fetchQuoteByLength = async (length) => {
     let fetchedQuote;
@@ -43,7 +44,6 @@ const TypingTest = () => {
   };
 
   const handleLengthSelection = (length) => {
-    // Always re-fetch the quote, even if the length is the same
     setQuoteLength(length); // Update quote length
     fetchQuoteByLength(length); // Immediately fetch a new quote
   };
@@ -52,7 +52,7 @@ const TypingTest = () => {
     if (quoteLength) {
       fetchQuoteByLength(quoteLength);
     }
-  }, []); // Remove dependency to avoid double-fetching on state changes
+  }, []); // Initial fetch
 
   const handleKeyPress = (key) => {
     if (!quote) return;
@@ -104,13 +104,34 @@ const TypingTest = () => {
     }
   };
 
-  const handleKeyRelease = (key) => {
-    // Handle key release if needed
+  const handleInputKeyDown = () => {
+    // Prevent the default behaviour of the input and propagate the key to the handler
+    return;
   };
 
+  // Focus the hidden input on component mount or when the quote length changes
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [quoteLength]);
+
   return (
-    <div className="flex min-h-screen flex-col justify-between">
-      {/* If no quote length is selected, or if the user finishes a quote, show length options */}
+    <div
+      className="flex min-h-screen flex-col justify-between"
+      onClick={() => inputRef.current && inputRef.current.focus()} // Ensure focus on click
+    >
+      {/* Hidden input to trigger mobile keyboard */}
+      <input
+        ref={inputRef}
+        type="text"
+        value="" // No visible value
+        onKeyDown={handleInputKeyDown} // Delegate to key press handler
+        className="absolute top-0 left-0 opacity-0"
+        autoComplete="off"
+        autoFocus
+      />
+
       {!quoteLength || finishedQuote ? (
         <div className="text-center text-gray-400 p-4">
           <h1 className="text-2xl font-bold mb-4">
@@ -147,10 +168,9 @@ const TypingTest = () => {
             typedText={typedText}
             mistakes={mistakes}
           />
-          {/* Results appear here */}
           <Keyboard
             onKeyPress={handleKeyPress}
-            onKeyRelease={handleKeyRelease}
+            onKeyRelease={() => {}} // No-op for now
             stats={stats} // Pass stats to Keyboard
           />
         </>
