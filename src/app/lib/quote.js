@@ -4,20 +4,22 @@ const BASE_URL = "https://api.quotable.io/quotes/random";
 const fetchQuote = async (url) => {
   try {
     const response = await fetch(url, {
-      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
     if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.statusText}`);
+      throw new Error(
+        `Request failed with status ${response.status}: ${response.statusText}`
+      );
     }
 
     const data = await response.json();
-    return data.length > 0 ? data[0] : null;
+    return data;
   } catch (error) {
-    console.error("Error fetching quote: ", error);
+    console.error("Device:", navigator.userAgent);
+    console.error("Error fetching quote:", error);
     return null;
   }
 };

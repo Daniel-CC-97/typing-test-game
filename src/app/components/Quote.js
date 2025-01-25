@@ -5,7 +5,7 @@ const Quote = ({ quote, currentIndex, mistakes }) => {
     return <h1 className="text-2xl font-bold text-center">No Quote</h1>;
   }
 
-  const { content } = quote;
+  const { content } = quote[0];
   return (
     <div className="flex flex-wrap justify-center text-center gap-1 p-4">
       {content.split("").map((char, index) => {
